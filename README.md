@@ -11,7 +11,7 @@ in there is the executable `msAuthHelper.exe`.
 ## usage
 
 ```ps1
-    .\msAuthHelper.exe [port]
+.\msAuthHelper.exe [port]
 ```
 
 Go to [`http://localhost:port`](_) in your browser.
