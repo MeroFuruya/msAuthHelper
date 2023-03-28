@@ -46,7 +46,6 @@ function resetFields() {
     document.getElementById("client_id").value = "";
     document.getElementById("redirect_uri").value = "";
     document.getElementById("scope").value = "openid profile offline_access";
-    saveFieldsToCookie();
 }
 
 function getLoginUrl() {
