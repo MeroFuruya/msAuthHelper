@@ -4,7 +4,7 @@ Helps with the client-authentication against microsoft
 
 ## downlaod
 
-Download the zip file from the [release page](https://github.com/MeroFuruya/msAuthHelper/releases/latest) and extract it.
+Download the zip file from the [release page](https://github.com/MeroFuruya/msAuthHelper/releases/tag/delphi) and extract it.
 
 in there is the executable `msAuthHelper.exe`.
 
