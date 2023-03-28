@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <title>MsAuthHelper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th width="100%">Value</th>
+        </tr>
+        <tr>
+            <td>Tenant</td>
+            <td width="100%"><input type="text" name="tenant" id="tenant" aria-label="tenant" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td>Client ID</td>
+            <td width="100%"><input type="text" name="client_id" id="client_id" aria-label="client_id" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td>Redirect URI</td>
+            <td width="100%"><input type="text" name="redirect_uri" id="redirect_uri" aria-label="redirect_uri" style="width: 100%;"></td>
+        </tr>
+        <tr>
+            <td>Scope</td>
+            <td width="100%"><textarea name="scope" id="scope" aria-label="scope" style="width: 100%;"></textarea></td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td width="100%"><textarea name="state" id="state" aria-label="state" style="width: 100%;"></textarea></td>
+        </tr>
+    </table>
+    <input type="button" value="OK" onclick="goToLogin()">
+    <input type="button" value="RESET" onclick="resetFields()">
+    <script src="{{url_for('static', filename='index.js')}}" type="text/javascript"></script>
+</body>
+</html>
