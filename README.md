@@ -15,6 +15,7 @@ in there is the executable `msAuthHelper.exe`.
 ```
 
 Go to [`http://localhost:port`](_) in your browser.
+Default port is `8080`.
 
 Fill out all the fields and click `OK`.
 you will be redirected to the microsoft login page.
