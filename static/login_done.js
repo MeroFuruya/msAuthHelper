@@ -30,3 +30,7 @@ if (url_params.has("error")) {
     message_element.innerText = "No auth code or error was returned."
 }
 
+function goToIndex() {
+    window.location.href = "/";
+}
+
