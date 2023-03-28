@@ -1,26 +1,63 @@
-var tenant = encodeURIComponent(document.getElementById("tenant").value);
-var clientId = encodeURIComponent(document.getElementById("client_id").value);
-var redirectUri = encodeURIComponent(document.getElementById("redirect_uri").value);
-var scopes = encodeURIComponent(document.getElementById("scope").value);
-var state = encodeURIComponent(document.getElementById("state").value);
+var tenant = document.getElementById("tenant").value;
+var clientId = document.getElementById("client_id").value;
+var redirectUri = document.getElementById("redirect_uri").value;
+var scopes = document.getElementById("scope").value;
+var state = document.getElementById("state").value;
 
 function updateValues() {
-    tenant = encodeURIComponent(document.getElementById("tenant").value);
-    clientId = encodeURIComponent(document.getElementById("client_id").value);
-    redirectUri = encodeURIComponent(document.getElementById("redirect_uri").value);
-    scopes = encodeURIComponent(document.getElementById("scope").value);
-    state = encodeURIComponent(document.getElementById("state").value);
+    tenant = document.getElementById("tenant").value;
+    clientId = document.getElementById("client_id").value;
+    redirectUri = document.getElementById("redirect_uri").value;
+    scopes = document.getElementById("scope").value;
+    state = document.getElementById("state").value;
+}
+
+function saveFieldsToCookie() {
+    updateValues();
+    document.cookie = `tenant=${tenant}`;
+    document.cookie = `client_id=${clientId}`;
+    document.cookie = `redirect_uri=${redirectUri}`;
+    document.cookie = `scope=${scopes}`;
+}
+
+function loadFieldsFromCookie() {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        var cookie_name = cookie.split("=")[0];
+        var cookie_value = cookie.split("=")[1];
+        if (cookie_name == "tenant") {
+            document.getElementById("tenant").value = cookie_value;
+        } else if (cookie_name == "client_id") {
+            document.getElementById("client_id").value = cookie_value;
+        } else if (cookie_name == "redirect_uri") {
+            document.getElementById("redirect_uri").value = cookie_value;
+        } else if (cookie_name == "scope") {
+            document.getElementById("scope").value = cookie_value;
+        }
+    }
+    if (document.getElementById("scope").value == ""){
+        document.getElementById("scope").value = "openid profile offline_access";
+    }
+}
+
+function resetFields() {
+    document.getElementById("tenant").value = "";
+    document.getElementById("client_id").value = "";
+    document.getElementById("redirect_uri").value = "";
+    document.getElementById("scope").value = "openid profile offline_access";
+    saveFieldsToCookie();
 }
 
 function getLoginUrl() {
     updateValues();
     return `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/authorize?
-        client_id=${clientId}&
+        client_id=${encodeURIComponent(clientId)}&
         response_type=code&
-        redirect_uri=${redirectUri}&
+        redirect_uri=${encodeURIComponent(redirectUri)}&
         response_mode=query&
-        scope=${scopes}&
-        state=${state}`;
+        scope=${encodeURIComponent(scopes)}&
+        state=${encodeURIComponent(state)}`;
 }
 
 function goToLogin() {
@@ -29,6 +66,7 @@ function goToLogin() {
         alert("Please fill in all the fields");
         return;
     } else {
+        saveFieldsToCookie();
         window.location.href = getLoginUrl();
     }
 }
@@ -40,5 +78,8 @@ for (var i = 0; i < 20; i++) {
 }
 document.getElementById("state").value = state_value;
 
-// set scope value
-document.getElementById("scope").value = "openid profile offline_access";
+if (document.cookie == "") {
+    resetFields();
+} else {
+    loadFieldsFromCookie();
+}
