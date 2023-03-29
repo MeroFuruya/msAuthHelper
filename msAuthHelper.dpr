@@ -10,7 +10,8 @@ uses
   System.Classes,
   IdHTTPServer,
   IdContext,
-  IdCustomHTTPServer;
+  IdCustomHTTPServer,
+  IdGlobalProtocols;
 
 type
   TEventClass = class
@@ -22,27 +23,29 @@ type
 
 procedure TEventClass.onGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
+var
+  AFilename: string;
 begin
   if ARequestInfo.Document = '/' then
   begin
-    AResponseInfo.ContentDisposition := 'text/html';
-    AResponseInfo.ServeFile(AContext, './static/index.html');
+    AFilename := './static/index.html';
   end
   else if ARequestInfo.Document = '/js/index.js' then
   begin
-    AResponseInfo.ContentDisposition := 'text/html';
-    AResponseInfo.ServeFile(AContext, './static/index.js');
+    AFilename := './static/index.js';
   end
   else if ARequestInfo.Document = '/js/login_done.js' then
   begin
-    AResponseInfo.ContentDisposition := 'text/html';
-    AResponseInfo.ServeFile(AContext, './static/login_done.js');
+    AFilename := './static/login_done.js';
   end
   else
   begin
-    AResponseInfo.ContentDisposition := 'text/html';
-    AResponseInfo.ServeFile(AContext, './static/login_done.html');
+    AFilename := './static/login_done.html';
   end;
+  AResponseInfo.ContentType := AResponseInfo.HTTPServer.MIMETable.GetFileMIMEType(AFilename);;
+  AResponseInfo.ContentLength := FileSizeByName(AFilename);
+  AResponseInfo.WriteHeader;
+  AContext.Connection.IOHandler.WriteFile(AFilename);
 end;
 
 var
